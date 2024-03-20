@@ -36,7 +36,10 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
-      git = { enable = true },
+      git = {
+        enable = true,
+        ignore = false,
+      },
       diagnostics = {
         enable = true,
       }
@@ -57,7 +60,6 @@ return {
     'saecki/crates.nvim',
     event = "BufEnter *.toml",
     tag = 'stable',
-    -- lazy = false,
     opts = {},
     config = function(_, opts)
       require('crates').setup(opts)
@@ -128,8 +130,14 @@ return {
         winblend = function()
           return vim.o.winblend
         end,
-      }
+      },
+      extentions = {
+        ["ui-select"] = {
+        }
+      },
+      extensions_list = { "ui-select" },
     },
+    -- TODO: make telescope exit with <ESC> in insert mode (instead of <C-c>)
   },
 
   -- Highlight todo, notes, etc in comments
@@ -137,6 +145,7 @@ return {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    -- TODO: add group for safety comments
     opts = { signs = false },
   },
 
@@ -179,6 +188,13 @@ return {
     "mhinz/vim-startify",
     lazy = false,
   },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    -- WARN: we are basically disabling lazy loading for telescope
+    lazy = false,
+  },
 
   -- TODO: add yank higilight
+  -- TODO: disable <ESC> closing terminal in insert mode
+
 }

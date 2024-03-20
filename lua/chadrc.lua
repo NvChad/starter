@@ -37,49 +37,23 @@ if vim.g.neovide then
   ]])
 end
 
+-- TODO: set up misspelling detection
+-- TODO: set up highlight hovering word
+
 return {
   ui = {
     theme = 'onedark',
     hl_override = {
       Todo = {
         link = "Comment"
-      }
+      },
+      -- TODO: add semtoken colors
+      -- TODO: disable color highlighter's false positives (e.g. black_box should not be highlighted)
     },
     lsp_semantic_tokens = true,
     telescope = { style = "bordered" },
-    -- tabufline = {
-    --   lazyload = false,
-    -- },
     statusline = {
       separator_style = "round",
-      -- modules arg here is the default table of modules
-      -- overriden_modules = function(modules)
-      --   -- Add Obsession status
-      --   -- table.insert(
-      --   --   modules,
-      --   --   (function()
-      --   --     vim.cmd("highlight ObsessionStatus guifg=#FFFFFF guibg=#4F5D75")
-      --   --     return "%#ObsessionStatus#" .. (vim.fn['ObsessionStatus']() or "") .. "%*"
-      --   --   end)()
-      --   -- )
-      --
-      --   -- table.insert(modules, (function()
-      --   --   return require('auto-session.lib').current_session_name
-      --   -- end)());
-      --
-      --   -- Add Obsession status indicator between mode and filename
-      --   -- table.insert(
-      --   --   modules,
-      --   --   2,
-      --   --   (function()
-      --   --     return ObsessionStatus()
-      --   --   end)()
-      --   -- )
-      -- end,
     }
   },
-
-  -- mappings = require "custom.mappings",
-
-  -- plugins = "custom.plugins",
 }
