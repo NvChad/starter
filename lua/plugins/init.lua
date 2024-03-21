@@ -145,8 +145,9 @@ return {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    -- TODO: add group for safety comments
-    opts = { signs = false },
+    -- TODO: Add group for safety comments.
+    -- TODO: Make [\.\?\!] end comment description.
+    opts = { signs = true },
   },
 
   { -- Collection of various small independent plugins/modules
@@ -177,10 +178,13 @@ return {
 
   {
     "tpope/vim-fugitive",
+    -- TODO: this can be lazy.
     lazy = false,
+    cmd = { "Gvdiff", "Git" },
     keys = {
-      { "<leader>gd", "<cmd>Gvdiff<CR>", desc = "Git Pull" },
-      { "<leader>gs", "<cmd>Git<CR>",    desc = "Git Status" },
+      { "<leader>gd", "<cmd>Gvdiff<CR>",     desc = "Git Pull" },
+      { "<leader>gc", "<cmd>Git commit<CR>", desc = "Git commit" },
+      { "<leader>gs", "<cmd>Git<CR>",        desc = "Git Status" },
     },
   },
 

@@ -47,6 +47,7 @@ return {
       Todo = {
         link = "Comment"
       },
+      Identifier = {},
       -- TODO: add semtoken colors
       -- TODO: disable color highlighter's false positives (e.g. black_box should not be highlighted)
     },

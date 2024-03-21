@@ -2,32 +2,22 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+------------- QOL -------------
+-- map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
 map("i", "<C-s>", "<cmd>w<CR>", { desc = "File Save" })
 map("i", "<C-c>", "<cmd>%y+<CR>", { desc = "File Copy whole" })
-
-map("n", "<C-a>", function() require("dial.map").manipulate("increment", "normal") end, { desc = "Increment with dial" })
-map("n", "<C-x>", function() require("dial.map").manipulate("decrement", "normal") end, { desc = "Decrement with dial" })
-map("n", "g<C-a>", function() require("dial.map").manipulate("increment", "gnormal") end,
-  { desc = "Increment with dial" })
-map("n", "g<C-x>", function() require("dial.map").manipulate("decrement", "gnormal") end,
-  { desc = "Decrement with dial" })
-map("v", "<C-a>", function() require("dial.map").manipulate("increment", "visual") end, { desc = "Increment with dial" })
-map("v", "<C-x>", function() require("dial.map").manipulate("decrement", "visual") end, { desc = "Decrement with dial" })
-map("v", "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end,
-  { desc = "Increment with dial" })
-map("v", "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end,
-  { desc = "Decrement with dial" })
-
-map("n", "]t", function() require("todo-comments").jump_next() end, { desc = "Next annotated comment" })
-map("n", "[t", function() require("todo-comments").jump_prev() end, { desc = "Previous annotated comment" })
 map("n", ";", "<cmd>", { desc = "Terminal enter command mode" })
 map("n", "<leader>fm", function() require("conform").format() end, { desc = "File Format with conform" })
+-- TODO: Add mapping for toggling comment in insert mode.
+-- TODO: Make completion menu open whenever you enter insert mode.
+-- TODO: Map <TAB> and <S-<TAB>> to switch to last active window.
 
-map({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { desc = "Lsp Code action" })
--- map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
+------------- todo-comments -------------
+map("n", "]t", function() require("todo-comments").jump_next() end, { desc = "Next annotated comment" })
+map("n", "[t", function() require("todo-comments").jump_prev() end, { desc = "Previous annotated comment" })
+-- TODO: Add mapping for :TodoTelescope
 
-local opts = {};
--- TODO: add description for all these
+------------- crates.io -------------
 map('n', '<leader>ct', function() require("crates").toggle() end, { desc = "Toggle crates" })
 map('n', '<leader>cr', function() require("crates").reload() end, { desc = "Reload crates" })
 
@@ -65,3 +55,17 @@ map('n', '<leader>cH', function() require("crates").open_homepage() end, { desc 
 map('n', '<leader>cR', function() require("crates").open_repository() end, { desc = "Open crate repository" })
 map('n', '<leader>cD', function() require("crates").open_documentation() end, { desc = "Open crate documentation" })
 map('n', '<leader>cC', function() require("crates").open_crates_io() end, { desc = "Open crates.io" })
+
+------------- dial -------------
+map("n", "<C-a>", function() require("dial.map").manipulate("increment", "normal") end, { desc = "Increment with dial" })
+map("n", "<C-x>", function() require("dial.map").manipulate("decrement", "normal") end, { desc = "Decrement with dial" })
+map("n", "g<C-a>", function() require("dial.map").manipulate("increment", "gnormal") end,
+  { desc = "Increment with dial" })
+map("n", "g<C-x>", function() require("dial.map").manipulate("decrement", "gnormal") end,
+  { desc = "Decrement with dial" })
+map("v", "<C-a>", function() require("dial.map").manipulate("increment", "visual") end, { desc = "Increment with dial" })
+map("v", "<C-x>", function() require("dial.map").manipulate("decrement", "visual") end, { desc = "Decrement with dial" })
+map("v", "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end,
+  { desc = "Increment with dial" })
+map("v", "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end,
+  { desc = "Decrement with dial" })
