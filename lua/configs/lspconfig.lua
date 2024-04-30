@@ -21,3 +21,15 @@ lspconfig.tsserver.setup {
   on_init = on_init,
   capabilities = capabilities,
 }
+
+-- clangd
+lspconfig.clangd.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+
+  cmd = {
+    "clangd",
+    "--offset-encoding=utf-16",
+    "-header-insertion=never"
+  }
+}
