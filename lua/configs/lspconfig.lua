@@ -16,9 +16,32 @@ local servers = {
       },
     },
   },
+  asm_lsp = {
+    settings = {
+      single_file_support = true,
+    }
+  },
+  pylsp = {
+    settings = {
+      pylsp = {
+        plugins = {
+          pycodestyle = {
+            ignore = { 'W391' },
+            maxLineLength = 100
+          }
+        }
+      }
+    }
+  },
+  tsserver = {
+    settings = {
+
+    }
+  }
 }
 
 -- export on_attach & capabilities
+-- TODO: this is not set properly for lua because lua lsp is set up in NvChad
 configs.on_attach = function(client, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = desc }

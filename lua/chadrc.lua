@@ -1,5 +1,3 @@
-vim.opt.relativenumber = true;
-
 -- neovide settings
 if vim.g.neovide then
   vim.o.guifont = "FiraMono Nerd Font:h10";
@@ -37,8 +35,26 @@ if vim.g.neovide then
   ]])
 end
 
--- TODO: set up misspelling detection
+if vim.fn.has('win32') == 1 then
+  vim.o.shell = 'pwsh.exe'
+  vim.o.shellcmdflag = '-Command'
+  vim.o.shellxquote = ''
+  vim.o.shellquote = ''
+  vim.o.shellpipe = '| Out-File -Encoding UTF8 %s'
+  vim.o.shellredir = '| Out-File -Encoding UTF8 %s'
+else
+  -- Leave the default shell for non-Windows systems
+end
+
+vim.opt.relativenumber = true;
+-- FIX: misspelling detection sucks
+vim.opt.spelllang = 'en_us'
+-- Disabling spelling because it is enabled in terminal
+vim.opt.spell = false
+
 -- TODO: set up highlight hovering word
+-- TODO: Set up show scope like vscode.
+-- TODO: Set up snippets from vscode (drv*, struct, ...)
 
 return {
   ui = {
@@ -48,8 +64,8 @@ return {
         link = "Comment"
       },
       Identifier = {},
-      -- TODO: add semtoken colors
-      -- TODO: disable color highlighter's false positives (e.g. black_box should not be highlighted)
+      -- TODO: add semtoken colors from vscode
+      -- FIX: disable color highlighter's false positives (e.g. black_box should not be highlighted black)
     },
     lsp_semantic_tokens = true,
     telescope = { style = "bordered" },

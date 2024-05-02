@@ -132,8 +132,7 @@ return {
         end,
       },
       extentions = {
-        ["ui-select"] = {
-        }
+        ["ui-select"] = {}
       },
       extensions_list = { "ui-select" },
     },
@@ -144,10 +143,19 @@ return {
   {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
+    cmd = { "TodoTelescope" },
     dependencies = { 'nvim-lua/plenary.nvim' },
     -- TODO: Add group for safety comments.
     -- TODO: Make [\.\?\!] end comment description.
-    opts = { signs = true },
+    -- NOTE: Any keywords that you add here should also be added to the mapping for :TodoTelescope
+    opts = {
+      signs = true,
+      highlight = {
+        multiline = true,
+        -- NOTE: todo-comment is not flexible enough for detecting todo-comments that end in a regex, it can only detect lines that are or are not comments
+        multiline_pattern = "%S",
+      },
+    },
   },
 
   { -- Collection of various small independent plugins/modules

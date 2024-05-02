@@ -10,12 +10,18 @@ map("n", ";", "<cmd>", { desc = "Terminal enter command mode" })
 map("n", "<leader>fm", function() require("conform").format() end, { desc = "File Format with conform" })
 -- TODO: Add mapping for toggling comment in insert mode.
 -- TODO: Make completion menu open whenever you enter insert mode.
--- TODO: Map <TAB> and <S-<TAB>> to switch to last active window.
+-- TODO: Map _ to go to start of line or the first part of comment (after the colon if a TODO comment).
+
+-- map("n", "<tab>", function() require("nvchad.tabufline").next() end, { desc = "Buffer Goto next" })
+-- map("n", "<S-tab>", function() require("nvchad.tabufline").prev() end, { desc = "Buffer Goto prev" })
+map("n", "<C-tab>", "<cmd>bprev<cr>", { desc = "Buffer Goto prev active" })
+map("n", "<C-S-tab>", "<cmd>bnext<cr>", { desc = "Buffer Goto next active" })
 
 ------------- todo-comments -------------
 map("n", "]t", function() require("todo-comments").jump_next() end, { desc = "Next annotated comment" })
 map("n", "[t", function() require("todo-comments").jump_prev() end, { desc = "Previous annotated comment" })
--- TODO: Add mapping for :TodoTelescope
+map("n", "<leader>td", "<CMD>TodoTelescope keywords=FIX,FIXME,BUG,FIXIT,ISSUE,TODO,PERF,OPTIM,PERFORMANCE,OPTIMIZE<CR>",
+  { desc = "Open TODO telescope menu" })
 
 ------------- crates.io -------------
 map('n', '<leader>ct', function() require("crates").toggle() end, { desc = "Toggle crates" })
