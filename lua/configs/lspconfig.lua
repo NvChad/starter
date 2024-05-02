@@ -1,4 +1,4 @@
-local configs = require("nvchad.configs.lspconfig")
+local configs = require "nvchad.configs.lspconfig"
 
 local map = vim.keymap.set
 
@@ -16,28 +16,29 @@ local servers = {
       },
     },
   },
+
   asm_lsp = {
     settings = {
       single_file_support = true,
-    }
+    },
   },
+
   pylsp = {
     settings = {
       pylsp = {
         plugins = {
           pycodestyle = {
-            ignore = { 'W391' },
-            maxLineLength = 100
-          }
-        }
-      }
-    }
+            ignore = { "W391" },
+            maxLineLength = 100,
+          },
+        },
+      },
+    },
   },
-  tsserver = {
-    settings = {
 
-    }
-  }
+  tsserver = {
+    settings = {},
+  },
 }
 
 -- export on_attach & capabilities
@@ -62,14 +63,14 @@ configs.on_attach = function(client, bufnr)
   map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Lsp Go to type definition")
 
   map("n", "<leader>ra", function()
-    require "nvchad.lsp.renamer" ()
+    require "nvchad.lsp.renamer"()
   end, opts "Lsp NvRenamer")
 
   map("n", "<leader>ws", require("telescope.builtin").lsp_workspace_symbols, opts "Workspace symbols")
   map("n", "<leader>ds", require("telescope.builtin").lsp_document_symbols, opts "Document symbols")
 
   map({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, opts "Code action")
-  map("n", "gr", require('telescope.builtin').lsp_references, opts "show references")
+  map("n", "gr", require("telescope.builtin").lsp_references, opts "show references")
   -- map("n", "gr", vim.lsp.buf.references, opts "Lsp Show references")
 
   -- setup signature popup

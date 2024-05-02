@@ -2,14 +2,22 @@ return {
   {
     "folke/which-key.nvim",
     keys = {
-      "<leader>", '"', "'", "`", "c", "v", "g", "[", "]",
+      "<leader>",
+      '"',
+      "'",
+      "`",
+      "c",
+      "v",
+      "g",
+      "[",
+      "]",
       { "<c-r>", mode = { "c", "i" } },
       { "<c-w>", mode = { "n", "i" } },
     },
   },
 
   { -- Autoformat
-    'stevearc/conform.nvim',
+    "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     opts = {
@@ -19,7 +27,7 @@ return {
         lsp_fallback = true,
       },
       formatters_by_ft = {
-        lua = { 'stylua' },
+        lua = { "stylua" },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -42,7 +50,7 @@ return {
       },
       diagnostics = {
         enable = true,
-      }
+      },
     },
   },
 
@@ -57,12 +65,12 @@ return {
   -- },
 
   {
-    'saecki/crates.nvim',
+    "saecki/crates.nvim",
     event = "BufEnter *.toml",
-    tag = 'stable',
+    tag = "stable",
     opts = {},
     config = function(_, opts)
-      require('crates').setup(opts)
+      require("crates").setup(opts)
     end,
   },
 
@@ -105,6 +113,19 @@ return {
     end,
   },
 
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "lua-language-server",
+        "stylua",
+        "html-lsp",
+        "css-lsp",
+        "prettier",
+      },
+    },
+  },
+
   -- {
   --   'mg979/vim-visual-multi',
   --   branch = 'master',
@@ -132,7 +153,7 @@ return {
         end,
       },
       extentions = {
-        ["ui-select"] = {}
+        ["ui-select"] = {},
       },
       extensions_list = { "ui-select" },
     },
@@ -141,10 +162,10 @@ return {
 
   -- Highlight todo, notes, etc in comments
   {
-    'folke/todo-comments.nvim',
-    event = 'VimEnter',
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
     cmd = { "TodoTelescope" },
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { "nvim-lua/plenary.nvim" },
     -- TODO: Add group for safety comments.
     -- TODO: Make [\.\?\!] end comment description.
     -- NOTE: Any keywords that you add here should also be added to the mapping for :TodoTelescope
@@ -159,29 +180,29 @@ return {
   },
 
   { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
+    "echasnovski/mini.nvim",
     version = "*",
     lazy = false,
     config = function()
-      require("configs.mini-nvim")
+      require "configs.mini-nvim"
     end,
   },
 
   {
-    'monaqa/dial.nvim',
+    "monaqa/dial.nvim",
     config = function()
-      local augend = require("dial.augend")
+      local augend = require "dial.augend"
       require("dial.config").augends:register_group {
         -- default augends used when no group name is specified
         -- TODO: add other augends
         default = {
-          augend.constant.alias.bool,    -- boolean value (true <-> false)
-          augend.integer.alias.decimal,  -- nonnegative decimal number (0, 1, 2, 3, ...)
-          augend.integer.alias.hex,      -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+          augend.constant.alias.bool, -- boolean value (true <-> false)
+          augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
+          augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
           augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
         },
       }
-    end
+    end,
   },
 
   {
@@ -190,9 +211,9 @@ return {
     lazy = false,
     cmd = { "Gvdiff", "Git" },
     keys = {
-      { "<leader>gd", "<cmd>Gvdiff<CR>",     desc = "Git Pull" },
+      { "<leader>gd", "<cmd>Gvdiff<CR>", desc = "Git Pull" },
       { "<leader>gc", "<cmd>Git commit<CR>", desc = "Git commit" },
-      { "<leader>gs", "<cmd>Git<CR>",        desc = "Git Status" },
+      { "<leader>gs", "<cmd>Git<CR>", desc = "Git Status" },
     },
   },
 
@@ -200,6 +221,7 @@ return {
     "mhinz/vim-startify",
     lazy = false,
   },
+
   {
     "nvim-telescope/telescope-ui-select.nvim",
     -- WARN: we are basically disabling lazy loading for telescope
@@ -208,5 +230,4 @@ return {
 
   -- TODO: add yank higilight
   -- TODO: disable <ESC> closing terminal in insert mode
-
 }
