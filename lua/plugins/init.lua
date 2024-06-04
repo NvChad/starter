@@ -196,9 +196,9 @@ return {
         -- default augends used when no group name is specified
         -- TODO: add other augends
         default = {
-          augend.constant.alias.bool, -- boolean value (true <-> false)
-          augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
-          augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+          augend.constant.alias.bool,    -- boolean value (true <-> false)
+          augend.integer.alias.decimal,  -- nonnegative decimal number (0, 1, 2, 3, ...)
+          augend.integer.alias.hex,      -- nonnegative hex number  (0x01, 0x1a1f, etc.)
           augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
         },
       }
@@ -211,9 +211,9 @@ return {
     lazy = false,
     cmd = { "Gvdiff", "Git" },
     keys = {
-      { "<leader>gd", "<cmd>Gvdiff<CR>", desc = "Git Pull" },
+      { "<leader>gd", "<cmd>Gvdiff<CR>",     desc = "Git Pull" },
       { "<leader>gc", "<cmd>Git commit<CR>", desc = "Git commit" },
-      { "<leader>gs", "<cmd>Git<CR>", desc = "Git Status" },
+      { "<leader>gs", "<cmd>Git<CR>",        desc = "Git Status" },
     },
   },
 
@@ -226,6 +226,11 @@ return {
     "nvim-telescope/telescope-ui-select.nvim",
     -- WARN: we are basically disabling lazy loading for telescope
     lazy = false,
+  },
+
+  {
+    "godlygeek/tabular",
+    cmd = { "Tab" },
   },
 
   -- TODO: add yank higilight
