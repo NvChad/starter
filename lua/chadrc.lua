@@ -1,6 +1,6 @@
 -- neovide settings
 if vim.g.neovide then
-  vim.o.guifont = "FiraMono Nerd Font:h10"
+  vim.o.guifont = "FiraCode Nerd Font:h10"
   vim.o.winblend = 30
 
   -- vim.g.neovide_transparency = 1.0

@@ -233,6 +233,7 @@ return {
     cmd = { "Tab" },
   },
 
+  -- TODO: Add harpoon for buffer switching and session switchin
   -- TODO: add yank higilight
   -- TODO: disable <ESC> closing terminal in insert mode
 }
