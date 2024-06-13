@@ -37,18 +37,18 @@ if vim.g.neovide then
   ]]
 end
 
-if vim.fn.has "win32" == 1 then
-  vim.o.shell = "pwsh.exe"
-  vim.o.shellcmdflag = "-Command"
-  vim.o.shellxquote = ""
-  vim.o.shellquote = ""
-  vim.o.shellpipe = "| Out-File -Encoding UTF8 %s"
-  vim.o.shellredir = "| Out-File -Encoding UTF8 %s"
-else
-  -- Leave the default shell for non-Windows systems
-end
+-- if vim.fn.has "win32" == 1 then
+--   vim.o.shell = "pwsh.exe"
+--   vim.o.shellcmdflag = "-Command"
+--   vim.o.shellxquote = ""
+--   vim.o.shellquote = ""
+--   vim.o.shellpipe = "| Out-File -Encoding UTF8 %s"
+--   vim.o.shellredir = "| Out-File -Encoding UTF8 %s"
+-- else
+--   -- Leave the default shell for non-Windows systems
+-- end
 
-vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true
 -- FIX: misspelling detection sucks
 vim.opt.spelllang = "en_us"
 -- Disabling spelling because it is enabled in terminal

@@ -217,10 +217,10 @@ return {
     },
   },
 
-  {
-    "mhinz/vim-startify",
-    lazy = false,
-  },
+  -- {
+  --   "mhinz/vim-startify",
+  --   lazy = false,
+  -- },
 
   {
     "nvim-telescope/telescope-ui-select.nvim",
