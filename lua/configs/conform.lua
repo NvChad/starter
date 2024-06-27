@@ -5,6 +5,8 @@ local options = {
     html = { "prettier" },
     typescript = {"prettier"},
     javascript = {"prettier"},
+    terraform = {"tflint"},
+
 
   },
 
