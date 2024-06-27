@@ -5,12 +5,18 @@
 local M = {}
 
 M.ui = {
-	theme = "onedark",
+	--theme = "tokyonight",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
 	-- 	["@comment"] = { italic = true },
 	-- },
+  --
+
+  -- disable buffline, I like actual vim tabs!
+  tabufline = {
+    enabled = false,
+  },
 }
 
 return M
