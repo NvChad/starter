@@ -63,7 +63,7 @@ configs.on_attach = function(client, bufnr)
   map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Lsp Go to type definition")
 
   map("n", "<leader>ra", function()
-    require "nvchad.lsp.renamer"()
+    require "nvchad.lsp.renamer" ()
   end, opts "Lsp NvRenamer")
 
   map("n", "<leader>ws", require("telescope.builtin").lsp_workspace_symbols, opts "Workspace symbols")
@@ -74,7 +74,7 @@ configs.on_attach = function(client, bufnr)
   -- map("n", "gr", vim.lsp.buf.references, opts "Lsp Show references")
 
   -- setup signature popup
-  if require("nvconfig").ui.lsp.signature and client.server_capabilities.signatureHelpProvider then
+  if client and client.server_capabilities.signatureHelpProvider then
     require("nvchad.lsp.signature").setup(client, bufnr)
   end
 end
