@@ -39,6 +39,10 @@ local servers = {
   tsserver = {
     settings = {},
   },
+
+  clangd = {
+    settings = {},
+  },
 }
 
 -- export on_attach & capabilities
