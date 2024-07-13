@@ -73,55 +73,6 @@ M.ui = {
     Comment = {
       italic = true,
     },
-    ["@comment"] = {
-      italic = true,
-    },
-    -- ["@lsp.type.class"] = { link = "Structure" },
-    -- ["@lsp.type.decorator"] = { link = "Function" },
-    -- ["@lsp.type.enum"] = { link = "Structure" },
-    -- ["@lsp.type.enumMember"] = { link = "Constant" },
-    -- ["@lsp.type.function"] = { link = "Function" },
-    -- ["@lsp.type.interface"] = { link = "Structure" },
-    ["@lsp.type.macro"] = { link = "Macro" },
-    ["@lsp.type.method"] = { link = "@function.method" },       -- Function
-    ["@lsp.type.namespace"] = { link = "@module" },             -- Structure
-    ["@lsp.type.parameter"] = { link = "@variable.parameter" }, -- Identifier
-    -- ["@lsp.type.property"] = { link = "Identifier" },
-    -- ["@lsp.type.struct"] = { link = "Structure" },
-    -- ["@lsp.type.type"] = { link = "Type" },
-    -- ["@lsp.type.typeParameter"] = { link = "TypeDef" },
-    ["@lsp.type.variable"] = { fg = 'none' }, -- Identifier
-    ["@lsp.type.comment"] = { fg = 'none' },  -- Comment
-
-
-    ["@lsp.type.selfParameter"] = { link = "@variable.builtin" },
-    -- ["@lsp.type.builtinConstant"] = { link = "@constant.builtin" },
-    ["@lsp.type.builtinConstant"] = { link = "@constant.builtin" },
-    ["@lsp.type.magicFunction"] = { link = "@function.builtin" },
-
-
-    ["@lsp.mod.readonly"] = { link = "Constant" },
-    ["@lsp.mod.typeHint"] = { link = "Type" },
-    -- ["@lsp.mod.defaultLibrary"] = { link = "Special" },
-    -- ["@lsp.mod.builtin"] = { link = "Special" },
-
-    ["@lsp.typemod.operator.controlFlow"] = { link = "@keyword.exception" },
-    ["@lsp.typemod.keyword.documentation"] = { link = "Special" },
-
-    ["@lsp.typemod.variable.global"] = { link = "Constant" },
-    ["@lsp.typemod.variable.static"] = { link = "Constant" },
-    ["@lsp.typemod.variable.defaultLibrary"] = { link = "Special" },
-
-    ["@lsp.typemod.function.builtin"] = { link = "@function.builtin" },
-    ["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" },
-    ["@lsp.typemod.method.defaultLibrary"] = { link = "@function.builtin" },
-
-    ["@lsp.typemod.operator.injected"] = { link = "Operator" },
-    ["@lsp.typemod.string.injected"] = { link = "String" },
-    ["@lsp.typemod.variable.injected"] = { link = "@variable" },
-
-    -- TODO: add semtoken colors from vscode
-    -- FIX: disable color highlighter's false positives (e.g. black_box should not be highlighted black)
   },
   lsp_semantic_tokens = true,
   telescope = {
@@ -131,5 +82,23 @@ M.ui = {
     separator_style = "round",
   },
 }
+
+vim.api.nvim_set_hl(0, "@lsp.type.class", { bold = true, fg = "#73d0ff" })
+vim.api.nvim_set_hl(0, "@lsp.type.decorator", { bold = true, fg = "#ff9900" })
+vim.api.nvim_set_hl(0, "@lsp.type.derive", { fg = "#ff9900" })
+vim.api.nvim_set_hl(0, "@lsp.type.enum", { bold = true, italic = true, fg = "#73d0ff" })
+vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { bold = true, italic = true, fg = "#ff7391" })
+vim.api.nvim_set_hl(0, "@lsp.type.function", { bold = true, fg = "#ffd173" })
+vim.api.nvim_set_hl(0, "@lsp.type.interface", { bold = true, fg = "#73ffde" })
+vim.api.nvim_set_hl(0, "@lsp.type.method", { bold = true, italic = true, fg = "#ffd173" })
+vim.api.nvim_set_hl(0, "@lsp.type.namespace", { bold = true, fg = "#ff73ea" })
+vim.api.nvim_set_hl(0, "@lsp.type.parameter", { fg = "#92de53" })
+vim.api.nvim_set_hl(0, "@lsp.type.property", { bold = true, italic = true, fg = "#53de8d" })
+vim.api.nvim_set_hl(0, "@lsp.type.struct", { bold = true, fg = "#73d0ff" })
+vim.api.nvim_set_hl(0, "@lsp.type.type", { bold = true, fg = "#73d0ff" })
+vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { bold = true, fg = "#ff7373" })
+vim.api.nvim_set_hl(0, "@lsp.type.variable", { fg = "#53de8d" })
+vim.api.nvim_set_hl(0, "@lsp.typemod.variable.constant", { bold = true, fg = "#f2ff00" })
+vim.api.nvim_set_hl(0, "@lsp.typemod.variable.readonly", { bold = true, fg = "#f2ff00" })
 
 return M
