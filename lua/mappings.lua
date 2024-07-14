@@ -10,6 +10,7 @@ map("n", ";", "<cmd>", { desc = "Terminal enter command mode" })
 map("n", "<leader>fm", function()
   require("conform").format()
 end, { desc = "File Format with conform" })
+map("n", "<leader>cs", "<cmd>Telescope session-lens<cr>", { desc = "Change session telescope" })
 -- TODO: Add mapping for toggling comment in insert mode.
 -- TODO: Make completion menu open whenever you enter insert mode.
 -- TODO: Map _ to go to start of line or the first part of comment (after the colon if a TODO comment).
