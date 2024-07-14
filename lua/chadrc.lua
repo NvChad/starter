@@ -67,12 +67,10 @@ local M = {}
 M.ui = {
   theme = "onedark",
   hl_override = {
-    Todo = {
-      link = "Comment",
-    },
-    Comment = {
-      italic = true,
-    },
+    Todo = { link = "Comment" },
+    Comment = { italic = true },
+    Type = { fg = "#73d0ff" },
+    Function = { fg = "#ffd173" },
   },
   lsp_semantic_tokens = true,
   telescope = {
@@ -83,22 +81,33 @@ M.ui = {
   },
 }
 
-vim.api.nvim_set_hl(0, "@lsp.type.class", { bold = true, fg = "#73d0ff" })
+-- Highlight groups for other elements
 vim.api.nvim_set_hl(0, "@lsp.type.decorator", { bold = true, fg = "#ff9900" })
 vim.api.nvim_set_hl(0, "@lsp.type.derive", { fg = "#ff9900" })
-vim.api.nvim_set_hl(0, "@lsp.type.enum", { bold = true, italic = true, fg = "#73d0ff" })
-vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { bold = true, italic = true, fg = "#ff7391" })
+
 vim.api.nvim_set_hl(0, "@lsp.type.function", { bold = true, fg = "#ffd173" })
-vim.api.nvim_set_hl(0, "@lsp.type.interface", { bold = true, fg = "#73ffde" })
 vim.api.nvim_set_hl(0, "@lsp.type.method", { bold = true, italic = true, fg = "#ffd173" })
+vim.api.nvim_set_hl(0, "@function", { link = "Function" })
+
+vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { bold = true, italic = true, fg = "#ff7391" })
+vim.api.nvim_set_hl(0, "@lsp.type.interface", { bold = true, fg = "#73ffde" })
 vim.api.nvim_set_hl(0, "@lsp.type.namespace", { bold = true, fg = "#ff73ea" })
-vim.api.nvim_set_hl(0, "@lsp.type.parameter", { fg = "#92de53" })
-vim.api.nvim_set_hl(0, "@lsp.type.property", { bold = true, italic = true, fg = "#53de8d" })
-vim.api.nvim_set_hl(0, "@lsp.type.struct", { bold = true, fg = "#73d0ff" })
-vim.api.nvim_set_hl(0, "@lsp.type.type", { bold = true, fg = "#73d0ff" })
-vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { bold = true, fg = "#ff7373" })
-vim.api.nvim_set_hl(0, "@lsp.type.variable", { fg = "#53de8d" })
+
 vim.api.nvim_set_hl(0, "@lsp.typemod.variable.constant", { bold = true, fg = "#f2ff00" })
 vim.api.nvim_set_hl(0, "@lsp.typemod.variable.readonly", { bold = true, fg = "#f2ff00" })
+vim.api.nvim_set_hl(0, "@lsp.type.parameter", { fg = "#92de53" })
+vim.api.nvim_set_hl(0, "@lsp.type.property", { bold = true, italic = true, fg = "#53de8d" })
+vim.api.nvim_set_hl(0, "@lsp.type.variable", { fg = "#53de8d" })
+
+vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { bold = true, fg = "#ff7373" })
+
+-- Highlight groups for types
+vim.api.nvim_set_hl(0, "@lsp.type.class", { bold = true, fg = "#73d0ff" })
+vim.api.nvim_set_hl(0, "@lsp.type.primitive", { link = "@lsp.type.class" })
+vim.api.nvim_set_hl(0, "@lsp.type.builtinType", { link = "@lsp.type.class" })
+vim.api.nvim_set_hl(0, "@lsp.type.struct", { link = "@lsp.type.class" })
+vim.api.nvim_set_hl(0, "@lsp.type.type", { link = "@lsp.type.class" })
+vim.api.nvim_set_hl(0, "@lsp.type.enum", { bold = true, italic = true, fg = "#73d0ff" })
+vim.api.nvim_set_hl(0, "@type.builtin", { link = "Type" })
 
 return M
