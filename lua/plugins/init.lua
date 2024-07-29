@@ -243,6 +243,39 @@ return {
     cmd = { "Tab" },
   },
 
+  {
+    'xeluxee/competitest.nvim',
+    dependencies = 'MunifTanjim/nui.nvim',
+    cmd = { "CompetiTest" },
+    config = function()
+      require('competitest').setup({
+        testcases_directory = "inputs",
+        testcases_use_single_file = false,
+        testcases_auto_detect_storage = true,
+        testcases_single_file_format = "$(FNOEXT).testcases",
+        testcases_input_file_format = "$(FNOEXT)_input$(TCNUM).txt",
+        testcases_output_file_format = "$(FNOEXT)_output$(TCNUM).txt",
+
+        evaluate_template_modifiers = true,
+        template_file = { cpp = "template.cpp" },
+        compile_command = {
+          cpp = {
+            exec = "g++",
+            args = { "-std=c++17", "-Wall", "-DLOCAL", "$(FNAME)", "-o", "bin/$(FNOEXT)" }
+          },
+        },
+        run_command = { cpp = { exec = "bin/$(FNOEXT)" } },
+        maximum_time = 5000,
+        runner_ui = { interface = "split" },
+      })
+    end,
+  },
+
+  {
+    "tpope/vim-sleuth",
+    lazy = false,
+  },
+
   -- TODO: Add harpoon for buffer switching and session switchin
   -- TODO: add yank higilight
   -- TODO: disable <ESC> closing terminal in insert mode
