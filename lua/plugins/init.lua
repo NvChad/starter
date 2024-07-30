@@ -28,12 +28,34 @@ return {
         "pyright",
         "clangd",
         "rust-analyzer",
+        "gopls",
+        "black",
       },
+      indent = {enable = true},
+      auto_install = true,
+      sync_install = false,
+      highlight = {
+        enable = true,
+        disabled = {"csv"},
+      },
+      textobjects = {select = {enable = true, lookahead = true}}
+
     },
   },
 
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects" }, -- Syntax aware text-objects
+      {
+        "nvim-treesitter/nvim-treesitter-context", -- Show code context
+        opts = {
+          enable = true,
+          mode = "topline",
+          line_numbers = true,
+        },
+      },
+    },
     opts = {
       ensure_installed = {
         "vim",
@@ -45,6 +67,7 @@ return {
         "c",
         "cpp",
         "rust",
+        "go",
       },
     },
   },
@@ -54,10 +77,9 @@ return {
     "ggandor/lightspeed.nvim",
     event = "VimEnter",
   },
-  -- nvim-surround
   {
     "kylechui/nvim-surround",
-    version = "å*", -- Use for stability; omit to use `main` branch for the latest features
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
       require("nvim-surround").setup {}
@@ -67,7 +89,7 @@ return {
   {
     "mrcjkb/rustaceanvim",
     version = "^4", -- Recommended
-    ft = { "rust"},
+    ft = { "rust" },
     lazy = false, -- This plugin is already lazy
     -- config = function(_, _)
     --   vim.g.rustaceanvim = {
@@ -79,5 +101,27 @@ return {
     --     },
     --   }
     -- end,
+  },
+  {
+    "Exafunction/codeium.vim",
+    event = "BufEnter",
+    opts = {
+      enable_chat = true,
+    },
+    config = function()
+      require "configs.codeium"
+      -- vim.keymap.set("i", "<C-g>", function()
+      --   return vim.fn["codeium#Accept"]()
+      -- end, { expr = true, silent = true })
+      -- vim.keymap.set("i", "<C-;>", function()
+      --   return vim.fn["codeium#CycleCompletions"](1)
+      -- end, { expr = true, silent = true })
+      -- vim.keymap.set("i", "<C-,>", function()
+      --   return vim.fn["codeium#CycleCompletions"](-1)
+      -- end, { expr = true, silent = true })
+      -- vim.keymap.set("i", "<C-x>", function()
+      --   return vim.fn["codeium#Clear"]()
+      -- end, { expr = true, silent = true })
+    end,
   },
 }

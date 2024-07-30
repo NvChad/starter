@@ -4,7 +4,7 @@ local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "pyright", "clangd" }
+local servers = { "html", "cssls", "pyright", "clangd", "gopls" }
 
 if vim.lsp.inlay_hint then
   vim.lsp.inlay_hint.enable(true, { 0 })
