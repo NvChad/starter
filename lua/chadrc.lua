@@ -66,6 +66,38 @@ vim.opt.spell = false
 ---@type ChadrcConfig
 local M = {}
 
+M.ui = {
+  nvdash = {
+    load_on_startup = true,
+
+    header = {
+      "      ____________       ",
+      "     ╱╲  ________ ╲      ",
+      "    ╱  ╲ ╲______╱╲ ╲     ",
+      "   ╱ ╱╲ ╲ ╲  ╱ ╱╲ ╲ ╲    ",
+      "  ╱ ╱ ╱╲ ╲ ╲╱ ╱ ╱╲ ╲ ╲   ",
+      " ╱ ╱ ╱__╲_╲╱ ╱ ╱__╲_╲ ╲  ",
+      "╱ ╱ ╱_______╱ ╱________╲ ",
+      "╲ ╲ ╲______ ╲ ╲______  ╱ ",
+      " ╲ ╲ ╲  ╱ ╱╲ ╲ ╲  ╱ ╱ ╱  ",
+      "  ╲ ╲ ╲╱ ╱ ╱╲ ╲ ╲╱ ╱ ╱   ",
+      "   ╲ ╲╱ ╱ ╱__╲_╲╱ ╱ ╱    ",
+      "    ╲  ╱ ╱______╲╱ ╱     ",
+      "     ╲╱___________╱      ",
+    },
+
+    buttons = {
+      { "  Sessions", "Spc c s", "Telescope session-lens" },
+      { "  Find File", "Spc f f", "Telescope find_files" },
+      { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },
+      { "󰈭  Find Word", "Spc f w", "Telescope live_grep" },
+      { "  Bookmarks", "Spc m a", "Telescope marks" },
+      { "  Themes", "Spc t h", "Telescope themes" },
+      { "  Mappings", "Spc c h", "NvCheatsheet" },
+    },
+  }
+}
+
 M.base46 = {
   theme = "onedark",
   hl_override = {
@@ -114,8 +146,11 @@ vim.api.nvim_set_hl(0, "@lsp.type.interface", { bold = true, fg = "#eb3f8f" })
 vim.api.nvim_set_hl(0, "@lsp.type.namespace", { bold = true, fg = "#ff73ea" })
 
 vim.api.nvim_set_hl(0, "@lsp.mod.const", { bold = true, fg = "#f2ff00" })
+-- We can't set this to const color because rust-analyzer tags const keyword as "@lsp.mod.constant"--
+-- vim.api.nvim_set_hl(0, "@lsp.mod.constant", { link = "@lsp.mod.const" })
 vim.api.nvim_set_hl(0, "@lsp.mod.readonly", { link = "@lsp.mod.const" })
 vim.api.nvim_set_hl(0, "@lsp.type.const", { link = "@lsp.mod.const" })
+vim.api.nvim_set_hl(0, "@lsp.type.constParameter", { link = "@lsp.mod.const" })
 
 vim.api.nvim_set_hl(0, "@lsp.type.parameter", { bold = true, fg = "#92de53" })
 vim.api.nvim_set_hl(0, "@lsp.type.property", { bold = true, italic = true, fg = "#53de8d" })
@@ -133,5 +168,8 @@ vim.api.nvim_set_hl(0, "@lsp.type.struct", { link = "@lsp.type.class" })
 vim.api.nvim_set_hl(0, "@lsp.type.type", { link = "@lsp.type.class" })
 
 vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { bold = true, italic = true, fg = "#73ffde" })
+
+vim.api.nvim_set_hl(0, "@lsp.type.selfTypeKeyword", { bold = true, fg = "#d19a66" })
+
 
 return M
