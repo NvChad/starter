@@ -1,0 +1,3 @@
+[submodule "pack/plugins/start/nvim-dap"]
+	path = pack/plugins/start/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap.git
