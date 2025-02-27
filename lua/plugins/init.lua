@@ -1,3 +1,5 @@
+require "nvchad.mappings"
+
 return {
   {
     "stevearc/conform.nvim",
