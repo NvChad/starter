@@ -6,7 +6,7 @@
 -- local M = {}
 
 -- M.base46 = {
--- 	theme = "tokyodark",
+-- 	theme = "tokyonight",
 
 -- 	-- hl_override = {
 -- 	-- 	Comment = { italic = true },
@@ -28,7 +28,7 @@
 local options = {
 
   base46 = {
-    theme = "tokyodark",
+    theme = "tokyonight",
     hl_add = {
 		Comment = { italic = true },
 		["@comment"] = { italic = true },

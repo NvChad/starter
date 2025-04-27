@@ -11,7 +11,7 @@ return {
     -- dashboard = { enabled = true },
     indent = { enabled = true },
     -- input = { enabled = true },
-    notifier = { enabled = true, style = 'minimal' },
+    notifier = { enabled = true, style = 'fancy' }, -- styles ["compact", "fancy", "minimal"]
     -- quickfile = { enabled = true },
     -- scroll = { enabled = true },
     statuscolumn = { enabled = true },
