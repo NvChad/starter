@@ -29,3 +29,23 @@ map('n', '<Space><Tab>', function() vim.cmd('ClangdSwitchSourceHeader') end, {
 })
 
 map('n', '<C-k>', '<C-i>', { noremap = true, silent = true })
+
+map('n', '<leader>gr', function()
+    require('telescope.builtin').lsp_references()
+end)
+
+map('n', '<leader>ds', function()
+    require('telescope.builtin').diagnostics()
+end)
+
+map('n', '<leader>fs', function()
+    require('telescope.builtin').lsp_document_symbols()
+end)
+
+map('n', '<leader>as', function()
+    require('telescope.builtin').lsp_workspace_symbols()
+end)
+
+map('n', '<leader>td', function()
+    require('telescope.builtin').lsp_type_definitions()
+end)

@@ -31,7 +31,6 @@ lspconfig.clangd.setup {
     capabilities = nvlsp.capabilities,
     cmd = {
         "clangd",
-        "--offset-encoding=utf-16"
-    }
+        "--offset-encoding=utf-16",
+    },
 }
-

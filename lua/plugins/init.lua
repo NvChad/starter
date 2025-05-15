@@ -22,8 +22,20 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("configs.telescope").setup()
+        opts = function()
+            -- Load NvChad's default Telescope config
+            local config = require("nvchad.configs.telescope")
+
+            config.defaults.file_ignore_patterns = {
+                "node_modules",
+                "build",
+                "%.vscode",
+                "%.git",
+                "%.cache",
+                "%.idea",
+            }
+
+            return config
         end,
     },
 }
