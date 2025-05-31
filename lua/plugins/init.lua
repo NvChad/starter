@@ -12,6 +12,9 @@ return {
       require "configs.lspconfig"
     end,
   },
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/nvim-cmp" },
+  { "L3MON4D3/LuaSnip" },
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
