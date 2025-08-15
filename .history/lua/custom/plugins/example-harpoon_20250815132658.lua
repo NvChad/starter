@@ -1,4 +1,4 @@
--- Harpoon for quick file navigation
+-- Example custom plugin: Harpoon for quick file navigation
 
 return {
   "ThePrimeagen/harpoon",

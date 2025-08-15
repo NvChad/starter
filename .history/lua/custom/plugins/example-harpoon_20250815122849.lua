@@ -1,4 +1,5 @@
--- Harpoon for quick file navigation
+-- Example custom plugin: Harpoon for quick file navigation
+-- Delete this file if you don't want Harpoon
 
 return {
   "ThePrimeagen/harpoon",
@@ -11,7 +12,7 @@ return {
     -- Keymaps
     vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Harpoon add file" })
     vim.keymap.set("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon menu" })
-
+    
     -- Navigate to files
     vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end, { desc = "Harpoon file 1" })
     vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end, { desc = "Harpoon file 2" })
