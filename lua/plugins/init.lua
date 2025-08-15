@@ -1,164 +1,165 @@
 return {
-  -- Formatting
-  {
-    "stevearc/conform.nvim",
-    event = 'BufWritePre',
-    opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        python = { "black" }, -- Microsoft's Black formatter
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-        json = { "prettier" },
-        markdown = { "prettier" },
-        c = { "clang-format" },
-        cpp = { "clang-format" },
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
-    },
-  },
+	-- Formatting
+	{
+		"stevearc/conform.nvim",
+		event = "BufWritePre",
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				python = { "black" }, -- Microsoft's Black formatter
+				javascript = { "prettier" },
+				typescript = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescriptreact = { "prettier" },
+				html = { "prettier" },
+				css = { "prettier" },
+				json = { "prettier" },
+				markdown = { "prettier" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			},
+		},
+	},
 
-  -- LSP
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
+	-- LSP
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
+		config = function()
+			require "configs.lspconfig"
+		end,
+	},
 
-  -- Mason
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        -- LSP servers
-        "lua-language-server",
-        "pyright",
-        "clangd",
-        "html-lsp",
-        "css-lsp",
-        "typescript-language-server",
-        "marksman", -- markdown
-        
-        -- Formatters
-        "stylua",
-        "black", -- Microsoft's Black formatter for Python
-        "prettier",
-        "clang-format",
-        
-        -- Linters
-        "flake8",
-        "eslint_d",
-      },
-    },
-  },
+	-- Mason
+	{
+		"williamboman/mason.nvim",
+		opts = {
+			ensure_installed = {
+				-- LSP servers
+				"lua-language-server",
+				"pyright",
+				"clangd",
+				"html-lsp",
+				"css-lsp",
+				"typescript-language-server",
+				"marksman", -- markdown
 
-  -- Treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = {
-      ensure_installed = {
-        "vim", "lua", "vimdoc",
-        "python", "c",
-        "html", "css", "javascript", "typescript",
-        "json", "markdown", "markdown_inline",
-      },
-      highlight = { enable = true },
-      indent = { enable = true },
-    },
-  },
+				-- Formatters
+				"stylua",
+				"black", -- Microsoft's Black formatter for Python
+				"prettier",
+				"clang-format",
 
-  -- Mini.nvim collection
-  {
-    "echasnovski/mini.nvim",
-    config = function()
-      -- File explorer (primary)
-      require('mini.files').setup {
-        windows = {
-          preview = true,
-          width_focus = 30,
-          width_preview = 30,
-        },
-        mappings = {
-          close = 'q',
-          go_in = 'l',
-          go_in_plus = '<CR>',
-          go_out = 'h',
-          go_out_plus = 'H',
-          reset = '<BS>',
-          reveal_cwd = '@',
-          show_help = 'g?',
-          synchronize = '=',
-          trim_left = '<',
-          trim_right = '>',
-        },
-      }
+				-- Linters
+				"flake8",
+				"eslint_d",
+			},
+		},
+	},
 
-      -- Notifications
-      require('mini.notify').setup {
-        content = {
-          format = function(notif) return notif.msg end,
-        },
-        window = {
-          config = {
-            border = 'rounded',
-          },
-          max_width_share = 0.382,
-          winblend = 25,
-        },
-      }
-      -- Override vim.notify with mini.notify
-      vim.notify = require('mini.notify').make_notify()
+	-- Treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		opts = {
+			ensure_installed = {
+				"vim",
+				"lua",
+				"vimdoc",
+				"python",
+				"c",
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"json",
+				"markdown",
+				"markdown_inline",
+			},
+			highlight = { enable = true },
+			indent = { enable = true },
+		},
+	},
 
-      -- Autopairs
-      require('mini.pairs').setup {}
+	-- Mini.nvim collection
+	{
+		"echasnovski/mini.nvim",
+		config = function()
+			-- File explorer (primary)
+			require("mini.files").setup {
+				windows = {
+					preview = true,
+					width_focus = 30,
+					width_preview = 30,
+				},
+				mappings = {
+					close = "q",
+					go_in = "l",
+					go_in_plus = "<CR>",
+					go_out = "h",
+					go_out_plus = "H",
+					reset = "<BS>",
+					reveal_cwd = "@",
+					show_help = "g?",
+					synchronize = "=",
+					trim_left = "<",
+					trim_right = ">",
+				},
+			}
 
-      -- Better text objects
-      require('mini.ai').setup { n_lines = 500 }
-    end,
-  },
+			-- Notifications
+			require("mini.notify").setup {
+				content = {
+					format = function(notif)
+						return notif.msg
+					end,
+				},
+				window = {
+					config = {
+						border = "rounded",
+					},
+					max_width_share = 0.382,
+					winblend = 25,
+				},
+			}
+			-- Override vim.notify with mini.notify
+			vim.notify = require("mini.notify").make_notify()
 
-  -- Git integration
-  {
-    "lewis6991/gitsigns.nvim",
-    opts = {
-      signs = {
-        add = { text = "│" },
-        change = { text = "│" },
-        delete = { text = "󰍵" },
-        topdelete = { text = "‾" },
-        changedelete = { text = "~" },
-        untracked = { text = "│" },
-      },
-    },
-  },
+			-- Autopairs
+			require("mini.pairs").setup {}
 
-  -- Markdown preview (for markdown files)
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-  },
+			-- Better text objects
+			require("mini.ai").setup { n_lines = 500 }
+		end,
+	},
 
-  -- Better diagnostics
-  {
-    "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy",
-    config = function()
-      require('tiny-inline-diagnostic').setup()
-    end
-  },
+	-- Markdown preview (for markdown files)
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = {
+			"MarkdownPreviewToggle",
+			"MarkdownPreview",
+			"MarkdownPreviewStop",
+		},
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+
+	-- Better diagnostics
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("tiny-inline-diagnostic").setup()
+		end,
+	},
 }
