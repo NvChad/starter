@@ -140,20 +140,6 @@ return {
 		end,
 	},
 
-	-- Markdown preview (for markdown files)
-	{
-		"iamcco/markdown-preview.nvim",
-		cmd = {
-			"MarkdownPreviewToggle",
-			"MarkdownPreview",
-			"MarkdownPreviewStop",
-		},
-		ft = { "markdown" },
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-	},
-
 	-- Better diagnostics
 	{
 		"rachartier/tiny-inline-diagnostic.nvim",
