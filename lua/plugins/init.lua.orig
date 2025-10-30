@@ -1,4 +1,5 @@
 return {
+
   {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPre", "BufNewFile" },
@@ -6,6 +7,7 @@ return {
       require "configs.treesitter"
     end,
   },
+
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -14,6 +16,8 @@ return {
       require "configs.lspconfig"
     end,
   },
+
+<<<<<<< HEAD
   {
     "williamboman/mason-lspconfig.nvim",
     event = "VeryLazy",
@@ -177,4 +181,18 @@ return {
       vim.keymap.set({ "n", "i" }, "<C-g>ge", "<cmd>GpEnew<cr>", keymapOptions "GpEnew")
     end,
   },
+=======
+  -- test new blink
+  -- { import = "nvchad.blink.lazyspec" },
+
+  -- {
+  -- 	"nvim-treesitter/nvim-treesitter",
+  -- 	opts = {
+  -- 		ensure_installed = {
+  -- 			"vim", "lua", "vimdoc",
+  --      "html", "css"
+  -- 		},
+  -- 	},
+  -- },
+>>>>>>> upstream/main
 }
