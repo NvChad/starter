@@ -4,3 +4,4 @@ local servers = { "html", "cssls" }
 vim.lsp.enable(servers)
 
 -- read :h vim.lsp.config for changing options of lsp servers 
+vim.lsp.config("roslyn", {})
