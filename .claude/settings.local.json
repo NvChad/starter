@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(poetry env info:*)",
+      "Bash(poetry env list:*)",
+      "Bash(uvx --help:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(nvim:*)",
+      "Bash(git add:*)",
+      "Bash(git push)",
+      "Read(//Users/andrewpatterson/.local/share/nvim/lazy/nvim-treesitter/**)",
+      "Bash(ls -la queries/python/)",
+      "Bash(grep -l \"conceal\" queries/python/*.scm)",
+      "Read(//opt/homebrew/Cellar/neovim/**)",
+      "Read(//opt/homebrew/Cellar/neovim/0.12.2/bin/**)",
+      "Bash(brew info *)",
+      "WebFetch(domain:api.github.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

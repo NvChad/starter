@@ -32,6 +32,11 @@ dofile(vim.g.base46_cache .. "statusline")
 require "options"
 require "autocmds"
 
+-- Re-enable Python provider after NvChad options (NvChad disables it, but we need it for Molten)
+vim.g.loaded_python3_provider = nil
+vim.g.python3_host_prog = vim.fn.exepath('python3') or vim.fn.exepath('python')
+
 vim.schedule(function()
   require "mappings"
 end)
+require 'myinit'

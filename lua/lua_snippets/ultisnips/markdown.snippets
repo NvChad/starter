@@ -1,0 +1,284 @@
+priority -50
+
+global !p
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+endglobal
+
+global !p
+# A overkill(dirty) table with automatic alignment feature
+def create_table(snip):
+	# retrieving single line from current string and treat it like tabstops count
+	placeholders_string = snip.buffer[snip.line].strip()
+	rows_amount = int(placeholders_string[0])
+	columns_amount = int(placeholders_string[1])
+
+	prefix_str = "from vimsnippets import display_width;"
+
+	# erase current line
+	snip.buffer[snip.line] = ""
+
+	# create anonymous snippet with expected content and number of tabstops
+	anon_snippet_title = "| "
+	anon_snippet_delimiter = "|"
+	for col in range(1, columns_amount+1):
+		sync_rows = [x*columns_amount+col for x in range(rows_amount+1)]
+		sync_str = ",".join(["t[{0}]".format(x) for x in sync_rows])
+		max_width_str = "max(list(map(display_width, [" + sync_str + "])))"
+		cur_width_str = "display_width(t[" + str(col) + "])"
+		rv_val = "(" + max_width_str + "-" + cur_width_str + ")*' '"
+		anon_snippet_title += "${" + str(col)  + ":head" + str(col)\
+			+ "}`!p " + prefix_str + "snip.rv=" + rv_val + "` | "
+		anon_snippet_delimiter += ":`!p " + prefix_str + "snip.rv = "\
+			+ max_width_str + "*'-'" + "`-|"
+
+	anon_snippet_title += "\n"
+
+	anon_snippet_delimiter += "\n"
+	anon_snippet_body = ""
+	for row in range(1, rows_amount+1):
+		body_row = "| "
+		for col in range(1, columns_amount+1):
+			sync_rows = [x*columns_amount+col for x in range(rows_amount+1)]
+			sync_str = ",".join(["t[{0}]".format(x) for x in sync_rows])
+			max_width_str = "max(list(map(display_width, [" + sync_str + "])))"
+			cur_width_str = "display_width(t[" + str(row*columns_amount+col) + "])"
+			rv_val = "(" + max_width_str + "-" + cur_width_str + ")*' '"
+			placeholder = "R{0}C{1}".format(row, col)
+			body_row += "${" + str(row*columns_amount+col)  + ":" + placeholder\
+				+ "}`!p " + prefix_str + "snip.rv=" + rv_val + "` | "
+
+		body_row += "\n"
+		anon_snippet_body += body_row
+
+	anon_snippet_table = anon_snippet_title + anon_snippet_delimiter + anon_snippet_body
+
+	# expand anonymous snippet
+	snip.expand_anon(anon_snippet_table)
+endglobal
+
+###########################
+# Sections and Paragraphs #
+###########################
+snippet sec "Section" b
+# ${1:Section Name} #
+$0
+endsnippet
+
+snippet ssec "Sub Section" b
+## ${1:Section Name} ##
+$0
+endsnippet
+
+snippet sssec "SubSub Section" b
+### ${1:Section Name} ###
+$0
+endsnippet
+
+snippet par "Paragraph" b
+#### ${1:Paragraph Name} ####
+$0
+endsnippet
+
+snippet spar "Paragraph" b
+##### ${1:Paragraph Name} #####
+$0
+endsnippet
+
+###################
+# Text formatting #
+###################
+
+snippet * "italics"
+*${1:${VISUAL}}*$0
+endsnippet
+
+snippet ** "bold"
+**${1:${VISUAL}}**$0
+endsnippet
+
+snippet *** "bold italics"
+***${1:${VISUAL}}***$0
+endsnippet
+
+snippet /* "Comment"
+<!-- ${1:${VISUAL}} -->$0
+endsnippet
+
+snippet $ "Mathmode" A
+\$${1:${VISUAL}}\$$0
+endsnippet
+
+snippet $$ "Inline Math"
+\$\$
+${1:${VISUAL}}
+\$\$
+$0
+endsnippet
+
+################
+# Common stuff #
+################
+snippet link "Link to something"
+[${1:${VISUAL:Text}}](${3:https://${2:www.url.com}})$0
+endsnippet
+
+snippet img "Image"
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet
+
+snippet ilc "Inline Code" i
+\`${1:${VISUAL}}\`$0
+endsnippet
+
+snippet cbl "Codeblock" b
+\`\`\`$1
+${2:${VISUAL}}
+\`\`\`
+$0
+endsnippet
+
+snippet refl "Reference Link"
+[${1:${VISUAL:Text}}][${2:id}]$0
+
+[$2]:${4:https://${3:www.url.com}} "${5:$4}"
+endsnippet
+
+snippet fnt "Footnote"
+[^${1:${VISUAL:Footnote}}]$0
+
+[^$1]:${2:Text}
+endsnippet
+
+snippet detail "Disclosure"
+<details${3: open=""}>
+  ${1:<summary>${2}</summary>}$0
+</details>
+endsnippet
+
+post_jump "create_table(snip)"
+snippet "tb([1-9][1-9])" "Fancy table" br
+`!p snip.rv = match.group(1)`
+endsnippet
+
+#snippet `a iA
+#\\alpha
+#endsnippet
+#snippet `b iA
+#\\beta
+#endsnippet
+#snippet `c iA
+#\\chi
+#endsnippet
+#snippet `d iA
+#\\delta
+#endsnippet
+#snippet `e iA
+#\\epsilon
+#endsnippet
+#snippet `f iA
+#\\phi
+#endsnippet
+#snippet `g iA
+#\\gamma
+#endsnippet
+#snippet `h iA
+#\\eta
+#endsnippet
+#snippet `k iA
+#\\kappa
+#endsnippet
+#snippet `l iA
+#\\lambda
+#endsnippet
+#snippet `m iA
+#\\mu
+#endsnippet
+#snippet `n iA
+#\\nu
+#endsnippet
+#snippet `o iA
+#\\omega
+#endsnippet
+#snippet `p iA
+#\\pi
+#endsnippet
+#snippet `q iA
+#\\theta
+#endsnippet
+#snippet `r iA
+#\\rho
+#endsnippet
+#snippet `s iA
+#\\sigma
+#endsnippet
+#snippet `t iA
+#\\tau
+#endsnippet
+#snippet `u iA
+#\\upsilon
+#endsnippet
+#snippet `z iA
+#\\zeta
+#endsnippet
+#snippet `D iA
+#\\Delta
+#endsnippet
+#snippet `F iA
+#\\Phi
+#endsnippet
+#snippet `G iA
+#\\Gamma
+#endsnippet
+#snippet `L iA
+#\\Lambda
+#endsnippet
+#snippet `N iA
+#\\nabla
+#endsnippet
+#snippet `O iA
+#\\Omega
+#endsnippet
+#snippet `Q iA
+#\\Theta
+#endsnippet
+#snippet `R iA
+#\\varrho
+#endsnippet
+#snippet `U iA
+#\\Upsilon
+#endsnippet
+#snippet `X iA
+#\\Xi
+#endsnippet
+#snippet `Y iA
+#\\Psi
+#endsnippet
+#snippet `i iA
+#\\int_{$1}^{$2}
+#endsnippet
+#snippet `S iA
+#\\sum_{$1}^{$2}
+#endsnippet
+#snippet `8 iA
+#\\infty
+#endsnippet
+#snippet `= iA
+#\\equiv
+#endsnippet
+#snippet `. iA
+#\\cdot
+#endsnippet
+#snippet `~ iA
+#\\tilde{$1}
+#endsnippet
+#snippet `^ iA
+#\\hat{$1}
+#endsnippet
+#snippet `; iA
+#\\dot{$1}
+#endsnippet
+#snippet \`_ iA
+#\\bar{$1}
+#endsnippet
+# vim:ft=snippets:

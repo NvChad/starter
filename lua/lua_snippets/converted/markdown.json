@@ -1,0 +1,316 @@
+{
+  "[": {
+    "prefix": "[",
+    "body": "[${1:text}](https://${2:address})"
+  },
+  "[\"": {
+    "prefix": "[\"",
+    "body": "[${1:text}](https://${2:address} \"${3:title}\")"
+  },
+  "[:": {
+    "prefix": "[:",
+    "body": [
+      "[${1:id}]: https://${2:url}",
+      ""
+    ]
+  },
+  "[:\"": {
+    "prefix": "[:\"",
+    "body": [
+      "[${1:id}]: https://${2:url} \"${3:title}\"",
+      ""
+    ]
+  },
+  "![": {
+    "prefix": "![",
+    "body": "![${1:alttext}](${2:/images/image.jpg})"
+  },
+  "![\"": {
+    "prefix": "![\"",
+    "body": "![${1:alttext}](${2:/images/image.jpg} \"${3:title}\")"
+  },
+  "![:": {
+    "prefix": "![:",
+    "body": [
+      "![${1:id}]: ${2:url}",
+      ""
+    ]
+  },
+  "![:\"": {
+    "prefix": "![:\"",
+    "body": [
+      "![${1:id}]: ${2:url} \"${3:title}\"",
+      ""
+    ]
+  },
+  "<": {
+    "prefix": "<",
+    "body": "<http://${1:url}>"
+  },
+  "**": {
+    "prefix": "**",
+    "body": "**${1:bold}**"
+  },
+  "__": {
+    "prefix": "__",
+    "body": "__${1:bold}__"
+  },
+  "-": {
+    "prefix": "-",
+    "body": "-   $0"
+  },
+  "blockquote": {
+    "prefix": "blockquote",
+    "body": [
+      "{% blockquote %\\}",
+      "${0:quote}",
+      "{% endblockquote %\\}",
+      ""
+    ]
+  },
+  "blockquote-author": {
+    "prefix": "blockquote-author",
+    "body": [
+      "{% blockquote ${1:author}, ${2:title} %\\}",
+      "${0:quote}",
+      "{% endblockquote %\\}",
+      ""
+    ]
+  },
+  "blockquote-link": {
+    "prefix": "blockquote-link",
+    "body": [
+      "{% blockquote ${1:author} ${2:URL} ${3:link_text} %\\}",
+      "${0:quote}",
+      "{% endblockquote %\\}",
+      ""
+    ]
+  },
+  "```": {
+    "prefix": "```",
+    "body": [
+      "```$1",
+      "${0:$TM_SELECTED_TEXT}",
+      "```",
+      ""
+    ]
+  },
+  "```l": {
+    "prefix": "```l",
+    "body": [
+      "```${1:language}",
+      "${2:code}",
+      "```",
+      ""
+    ]
+  },
+  "codeblock-short": {
+    "prefix": "codeblock-short",
+    "body": [
+      "{% codeblock %\\}",
+      "${0:code_snippet}",
+      "{% endcodeblock %\\}",
+      ""
+    ]
+  },
+  "codeblock-full": {
+    "prefix": "codeblock-full",
+    "body": [
+      "{% codeblock ${1:title} lang:${2:language} ${3:URL} ${4:link_text} %\\}",
+      "${0:code_snippet}",
+      "{% endcodeblock %\\}",
+      ""
+    ]
+  },
+  "gist-full": {
+    "prefix": "gist-full",
+    "body": [
+      "{% gist ${1:gist_id} ${0:filename} %\\}",
+      ""
+    ]
+  },
+  "gist-short": {
+    "prefix": "gist-short",
+    "body": [
+      "{% gist ${0:gist_id} %\\}",
+      ""
+    ]
+  },
+  "img": {
+    "prefix": "img",
+    "body": [
+      "{% img ${1:class} ${2:URL} ${3:width} ${4:height} ${5:title_text} ${0:alt_text} %\\}",
+      ""
+    ]
+  },
+  "youtube": {
+    "prefix": "youtube",
+    "body": [
+      "{% youtube ${0:video_id} %\\}",
+      ""
+    ]
+  },
+  "tb": {
+    "prefix": "tb",
+    "body": [
+      "|  ${0:factors}      |    ${1:a}       |  ${2:b}   \t|",
+      "| ------------- |-------------  | ------- |",
+      "|    ${3:f1}    |    Y          | N       |",
+      "|    ${4:f2}    |    Y          | N       |",
+      "",
+      ""
+    ]
+  },
+  "pullquote": {
+    "prefix": "pullquote",
+    "body": [
+      "{% pullquote %\\}",
+      "${1:text} {\" ${2:quote} \"\\} ${0:text}",
+      "{% endpullquote %\\}",
+      ""
+    ]
+  },
+  "mbf": {
+    "prefix": "mbf",
+    "description": "bold face math text",
+    "body": "\\mathbf{${1:$TM_SELECTED_TEXT}\\}$0"
+  },
+  "cal": {
+    "prefix": "cal",
+    "description": "math curly text",
+    "body": "\\mathcal{${1:$TM_SELECTED_TEXT}\\}$0"
+  },
+  "sc": {
+    "prefix": "sc",
+    "description": "small caps text",
+    "body": "\\textsc{${1:$TM_SELECTED_TEXT}\\}$0"
+  },
+  "rm": {
+    "prefix": "rm",
+    "description": "roman font text",
+    "body": "\\textrm{${1:$TM_SELECTED_TEXT}\\}$0"
+  },
+  "tt": {
+    "prefix": "tt",
+    "description": "typewriter (monospace) text",
+    "body": "\\texttt{${1:$TM_SELECTED_TEXT}\\}$0"
+  },
+  "frac": {
+    "prefix": "frac",
+    "description": "\\frac{}{}",
+    "body": "\\frac{${1:num}\\}{${2:denom}\\} $0"
+  },
+  "sum": {
+    "prefix": "sum",
+    "description": "\\sum^{}_{}",
+    "body": "\\sum^{${1:n}\\}_{${2:i=1}\\} $0"
+  },
+  "ddt": {
+    "prefix": "ddt",
+    "description": "time derivative",
+    "body": [
+      "\\frac{d\\}{dt\\} {$1\\} {$0\\}",
+      ""
+    ]
+  },
+  "lim": {
+    "prefix": "lim",
+    "description": "limit",
+    "body": [
+      "\\lim_{{$1\\}\\} {{$2\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "pdv": {
+    "prefix": "pdv",
+    "description": "partial derivation",
+    "body": [
+      "\\frac{\\partial {$1\\}\\}{partial {$2\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "ppdv": {
+    "prefix": "ppdv",
+    "description": "second partial derivation",
+    "body": [
+      "\\frac{partial^2 {$1\\}\\}{partial {$2\\} partial {$3\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "dv": {
+    "prefix": "dv",
+    "description": "derivative",
+    "body": [
+      "\\frac{d {$1\\}\\}{d {$2\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "sum": {
+    "prefix": "sum",
+    "description": "summation",
+    "body": [
+      "\\sum_{{$1\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "dot": {
+    "prefix": "dot",
+    "description": "dot",
+    "body": [
+      "\\dot{{$1\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "ddot": {
+    "prefix": "ddot",
+    "description": "ddot",
+    "body": [
+      "\\ddot{{$1\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "vec": {
+    "prefix": "vec",
+    "description": "vector",
+    "body": [
+      "\\vec{{$1\\}\\} {$0\\}",
+      ""
+    ]
+  },
+  "\\x": {
+    "prefix": "\\x",
+    "description": "cross product",
+    "body": [
+      "\\times {$0\\}",
+      ""
+    ]
+  },
+  ".": {
+    "prefix": ".",
+    "description": "dot product",
+    "body": [
+      "\\cdot {$0\\}",
+      ""
+    ]
+  },
+  "int": {
+    "prefix": "int",
+    "description": "integral",
+    "body": "\\int_{{$1\\}\\}^{{$2\\}\\} {$3\\} : d{$4\\} {$5\\}"
+  },
+  "tra": {
+    "prefix": "tra",
+    "description": "trace",
+    "body": "\\textrm{Tr\\}\\left[ $1 \\right]${0:$TM_SELECTED_TEXT}"
+  },
+  "ra": {
+    "prefix": "ra",
+    "description": "rightarrow",
+    "body": "\\rightarrow {$0\\}"
+  },
+  "theta": {
+    "prefix": "`w",
+    "dectription": "theta",
+    "body": "\\theta"
+  }
+}
