@@ -1,9 +1,4 @@
 local overrides = require "configs.overrides"
-local has_words_before = function()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
-end
 local cmp = require "cmp"
 
 ---@type NvPluginSpec[]
@@ -68,48 +63,77 @@ local plugins = {
         s = cmp.mapping.confirm { select = true },
         c = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
       }
-      conf.mapping["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          local entry = cmp.get_selected_entry()
-          if not entry then
-            cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-          else
-            cmp.confirm()
+      -- LuaSnip only drops the innermost deleted snippet, leaving a deleted outer
+      -- snippet (e.g. "//" inside "mk") active; keep dropping until the active one is intact
+      local function drop_deleted_snippets()
+        local luasnip = require "luasnip"
+        local buf = vim.api.nvim_get_current_buf()
+        for _ = 1, 10 do
+          local node = luasnip.session.current_nodes[buf]
+          luasnip.unlink_current_if_deleted()
+          if luasnip.session.current_nodes[buf] == node then
+            return
           end
-        elseif require("luasnip").expand_or_jumpable() then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback()
         end
-      end, {
-        "i",
-        "s",
-        -- "c",
-      })
-      conf.mapping["<S-Tab>"] = cmp.mapping(function(fallback)
+      end
+      -- <C-y> accepts the highlighted completion (or the first one), otherwise
+      -- expands the snippet trigger before the cursor
+      conf.mapping["<C-y>"] = cmp.mapping(function(fallback)
+        local luasnip = require "luasnip"
         if cmp.visible() then
-          cmp.select_prev_item()
-        elseif require("luasnip").jumpable(-1) then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+          cmp.confirm { select = true }
+        elseif luasnip.expandable() then
+          luasnip.expand()
         else
           fallback()
         end
-      end, {
-        "i",
-        "s",
-      })
+      end, { "i", "s" })
+      -- <Tab>/<S-Tab> move between snippet fields and never touch the completion
+      -- menu; inside a snippet <Tab> always jumps (use <C-y> to expand there)
+      conf.mapping["<Tab>"] = cmp.mapping(function(fallback)
+        drop_deleted_snippets()
+        local luasnip = require "luasnip"
+        if luasnip.locally_jumpable(1) then
+          cmp.close()
+          luasnip.jump(1)
+        elseif luasnip.expandable() then
+          cmp.close()
+          luasnip.expand()
+        else
+          fallback()
+        end
+      end, { "i", "s" })
+      conf.mapping["<S-Tab>"] = cmp.mapping(function(fallback)
+        drop_deleted_snippets()
+        local luasnip = require "luasnip"
+        if luasnip.locally_jumpable(-1) then
+          cmp.close()
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" })
       return conf
     end,
   },
   {
     "L3MON4D3/LuaSnip",
+    -- jsregexp enables regex transforms in vscode-style snippets (friendly-snippets)
+    build = "make install_jsregexp",
     opts = overrides.luasnip,
     config = function()
-      require("luasnip.loaders.from_lua").lazy_load { paths = { vim.fn.stdpath "config" .. "/lua/custom/lua_snippets" } }
+      require("luasnip").config.set_config {
+        history = true,
+        updateevents = "TextChanged,TextChangedI",
+        enable_autosnippets = true,
+        -- leave a snippet once the cursor moves out of it or its text is deleted,
+        -- so <Tab> doesn't jump back into stale snippets
+        region_check_events = "CursorMoved,CursorMovedI",
+        delete_check_events = "TextChanged,InsertLeave",
+      }
+      require("luasnip.loaders.from_lua").lazy_load { paths = { vim.fn.stdpath "config" .. "/lua/lua_snippets" } }
       require("luasnip.loaders.from_vscode").lazy_load {
-        paths = { vim.fn.stdpath "config" .. "/lua/custom/lua_snippets/converted" },
+        paths = { vim.fn.stdpath "config" .. "/lua/lua_snippets/converted" },
       }
       require("luasnip.loaders.from_vscode").lazy_load()
     end,
@@ -139,12 +163,11 @@ local plugins = {
       vim.g.vimtex_quickfix_method = vim.fn.executable "pplatex" == 1 and "pplatex" or "latexlog"
       vim.g.tex_flavor = "luatex"
       vim.g.vimtex_quickfix_mode = 0
-      vim.g.vimtex_compiler_latexmk = { out_dir = "build" }
-      vim.g.vimtex_view_general_viewer = "zathura"
-      vim.g.vimtex_viewer_zathura = 1
+      vim.g.vimtex_view_method = "zathura"
       vim.g.vimtex_compiler_method = "latexmk"
+      -- default to pdflatex (arXiv/revtex); use `% !TeX program = lualatex` per document to override
       vim.g.vimtex_compiler_latexmk_engines = {
-        _ = '-lualatex'
+        _ = "-pdf",
       }
       vim.g.vimtex_compiler_latexmk = {
         build_dir = "build",
@@ -161,20 +184,33 @@ local plugins = {
   },
 
   {
+    "nvim-telescope/telescope-bibtex.nvim",
+    ft = "tex",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("telescope").load_extension "bibtex"
+    end,
+  },
+  {
+    "jbyuki/nabla.nvim",
+    ft = "tex",
+  },
+
+  {
     "smjonas/snippet-converter.nvim",
     config = function()
       local template = {
         sources = {
           ultisnips = {
-            vim.fn.stdpath "config" .. "/lua/custom/lua_snippets/ultisnips",
+            vim.fn.stdpath "config" .. "/lua/lua_snippets/ultisnips",
           },
           snipmate = {
-            vim.fn.stdpath "config" .. "/lua/custom/lua_snippets/snippets",
+            vim.fn.stdpath "config" .. "/lua/lua_snippets/snippets",
           },
         },
         output = {
           vscode_luasnip = {
-            vim.fn.stdpath "config" .. "/lua/custom/lua_snippets/converted",
+            vim.fn.stdpath "config" .. "/lua/lua_snippets/converted",
           },
         },
       }
@@ -376,7 +412,47 @@ local plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
-    opts = overrides.telescope,
+    opts = function()
+      local conf = require "nvchad.configs.telescope"
+      -- telescope-bibtex only inserts the highlighted entry; insert every entry
+      -- marked with <Tab> as a single \cite{a,b,c} instead
+      local function cite_selected(prompt_bufnr)
+        local actions = require "telescope.actions"
+        local action_state = require "telescope.actions.state"
+        local picker = action_state.get_current_picker(prompt_bufnr)
+        local entries = picker:get_multi_selection()
+        if vim.tbl_isempty(entries) then
+          entries = { action_state.get_selected_entry() }
+        end
+        local keys = vim.tbl_map(function(entry)
+          return entry.id.name
+        end, entries)
+        -- read the cursor before closing: once closed it has already shifted right
+        local row, col = unpack(vim.api.nvim_win_get_cursor(picker.original_win_id))
+        actions.close(prompt_bufnr)
+        -- insert ~\cite{...} after the character under the cursor; if that
+        -- character is whitespace, replace it so the ~ ties to the previous word
+        local cite = "~\\cite{" .. table.concat(keys, ",") .. "}"
+        local line = vim.api.nvim_buf_get_lines(0, row - 1, row, true)[1]
+        local char = vim.fn.matchstr(line, "\\%" .. (col + 1) .. "c.")
+        local start_col, end_col = col + #char, col + #char
+        if char:match "^%s$" then
+          start_col = col
+        end
+        vim.api.nvim_buf_set_text(0, row - 1, start_col, row - 1, end_col, { cite })
+        -- telescope's pending stopinsert moves the cursor one left, onto the
+        -- closing }, then "a" appends after it (startinsert would be undone)
+        vim.api.nvim_win_set_cursor(0, { row, start_col + #cite })
+        vim.api.nvim_feedkeys("a", "n", true)
+      end
+      -- telescope-bibtex: use the .bib files referenced by the current document
+      conf.extensions.bibtex = {
+        context = true,
+        context_fallback = true,
+        mappings = { i = { ["<CR>"] = cite_selected }, n = { ["<CR>"] = cite_selected } },
+      }
+      return conf
+    end,
   },
 
   -- Jupyter notebook support

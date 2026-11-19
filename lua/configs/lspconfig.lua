@@ -80,12 +80,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = bufnr, desc = "LSP Go to implementation" })
 
   -- Enable inlay hints if supported
-  if client.supports_method("textDocument/inlayHint") then
+  if client:supports_method("textDocument/inlayHint") then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
 
   -- Enable semantic tokens if supported
-  if client.supports_method("textDocument/semanticTokens") then
+  if client:supports_method("textDocument/semanticTokens") then
     vim.highlight.priorities.semantic_tokens = 95
   end
 end
@@ -204,6 +204,15 @@ local servers = {
     capabilities = marksman_caps,
     filetypes = { "markdown" },
     single_file_support = true,
+  },
+
+  -- LaTeX: completion for commands, environments, \ref labels and \cite keys
+  texlab = {
+    settings = {
+      texlab = {
+        chktex = { onOpenAndSave = true, onEdit = false },
+      },
+    },
   },
 
   -- ruff = {

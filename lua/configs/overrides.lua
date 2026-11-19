@@ -35,6 +35,10 @@ M.mason = {
     -- c/cpp stuff
     "clangd",
     "clang-format",
+
+    -- latex
+    "texlab",
+    "tex-fmt",
   },
 }
 
