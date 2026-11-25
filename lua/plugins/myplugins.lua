@@ -41,36 +41,26 @@ local plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    -- main branch: a rewrite for nvim 0.12 that only installs parsers/queries and
+    -- provides indentexpr. Highlighting is started by NvChad's FileType autocmd
+    -- (vim.treesitter.start). Does not support lazy-loading.
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
     opts = overrides.treesitter,
-    init = function()
-      -- nvim 0.12 dropped the `all = false` directive/predicate option, so handlers now
-      -- always receive TSNode[] per capture. nvim-treesitter master still registers
-      -- handlers expecting a single node (e.g. set-lang-from-info-string! for markdown
-      -- code fences), which crashes with "attempt to call method 'range'". Wrap such
-      -- handlers so match[id] yields the last captured node, as `all = false` used to.
-      if vim.fn.has "nvim-0.12" == 0 then
-        return
-      end
-      local q = vim.treesitter.query
-      local function wrap(register)
-        return function(name, handler, opts)
-          if type(opts) == "table" and opts.all == false then
-            local inner = handler
-            handler = function(match, ...)
-              local single = setmetatable({}, {
-                __index = function(_, k)
-                  local v = match[k]
-                  return type(v) == "table" and v[#v] or v
-                end,
-              })
-              return inner(single, ...)
-            end
+    config = function(_, opts)
+      local ts = require "nvim-treesitter"
+      ts.setup()
+      ts.install(opts.ensure_installed) -- async; skips parsers already installed
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("TreesitterIndent", { clear = true }),
+        callback = function(args)
+          local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+          if lang and vim.treesitter.query.get(lang, "indents") then
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
           end
-          return register(name, handler, opts)
-        end
-      end
-      q.add_directive = wrap(q.add_directive)
-      q.add_predicate = wrap(q.add_predicate)
+        end,
+      })
     end,
   },
 
@@ -558,7 +548,7 @@ local plugins = {
   },
   {
     "DuckTigger/stim-treesitter-parser",
-    event = "VeryLazy",   -- ensure it loads at startup so :TSInstall stim works
+    lazy = false, -- registers the parser via a TSUpdate autocmd before any :TSInstall
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("stim-treesitter-config").setup({
