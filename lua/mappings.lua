@@ -110,3 +110,11 @@ map("i", "<C-CR>",
   'copilot#Accept("<CR>")',
   {desc ="Accept Copilot suggestion", silent = true, expr = true, noremap = false, replace_keycodes = false }
 )
+
+-- Git hunks (gitsigns): ]h / [h jump between changes, ]H / [H to last / first
+map("n", "]h", function() require("gitsigns").nav_hunk "next" end, { desc = "Git next hunk" })
+map("n", "[h", function() require("gitsigns").nav_hunk "prev" end, { desc = "Git prev hunk" })
+map("n", "]H", function() require("gitsigns").nav_hunk "last" end, { desc = "Git last hunk" })
+map("n", "[H", function() require("gitsigns").nav_hunk "first" end, { desc = "Git first hunk" })
+map("n", "<leader>gp", function() require("gitsigns").preview_hunk() end, { desc = "Git preview hunk" })
+map("n", "<leader>gr", function() require("gitsigns").reset_hunk() end, { desc = "Git reset hunk" })
